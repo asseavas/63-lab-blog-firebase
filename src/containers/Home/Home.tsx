@@ -29,7 +29,7 @@ const Home = () => {
       }
     };
 
-    fetchPosts();
+    void fetchPosts();
   }, []);
 
   return (

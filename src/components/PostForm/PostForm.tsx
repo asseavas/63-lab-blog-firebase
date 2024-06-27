@@ -21,6 +21,7 @@ const PostForm = () => {
     if (postId) {
       const fetchPost = async () => {
         setIsLoading(true);
+
         try {
           const { data } = await axiosApi.get<Post>(
             '/posts/' + postId + '.json',
@@ -30,7 +31,8 @@ const PostForm = () => {
           setIsLoading(false);
         }
       };
-      fetchPost();
+
+      void fetchPost();
     }
   }, [postId]);
 
@@ -45,6 +47,19 @@ const PostForm = () => {
     }));
   };
 
+  const formatDate = (date: Date): string => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
+
+    return new Intl.DateTimeFormat('en-EN', options).format(date);
+  };
+
   const onFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsLoading(true);
@@ -53,7 +68,12 @@ const PostForm = () => {
       if (postId) {
         await axiosApi.put('/posts/' + postId + '.json', post);
       } else {
-        await axiosApi.post('/posts.json', post);
+        const newPost = {
+          ...post,
+          date: formatDate(new Date()),
+        };
+
+        await axiosApi.post('/posts.json', newPost);
       }
       navigate('/');
     } finally {
@@ -73,39 +93,43 @@ const PostForm = () => {
   }
 
   return (
-    <div className="container pt-5">
-      <form onSubmit={onFormSubmit}>
-        <h4 className="mb-4 text-center">
-          {postId ? 'Edit post' : 'Add new post'}
-        </h4>
-        <div className="form-group">
-          <label htmlFor="name">Title</label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            required
-            className="form-control"
-            onChange={onFieldChange}
-            value={post.title}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="description">Text</label>
-          <textarea
-            name="text"
-            id="text"
-            className="form-control"
-            onChange={onFieldChange}
-            value={post.text}
-          />
-        </div>
-        <div className="w-100 d-flex">
-          <button type="submit" className="btn btn-primary mt-4 ms-auto px-5">
-            {postId ? 'Save' : 'Add'}
-          </button>
-        </div>
-      </form>
+    <div className="container pt-5 d-flex justify-content-center">
+      <div className="rounded-4 bg-light-subtle p-4 px-5 w-50">
+        <form onSubmit={onFormSubmit} className="w-100">
+          <h4 className="my-4 text-center">
+            {postId ? 'Edit post' : 'Add new post'}
+          </h4>
+          <div className="form-group">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Title"
+              className="form-control bg-body-secondary border-0 rounded-4 p-3"
+              onChange={onFieldChange}
+              value={post.title}
+            />
+          </div>
+          <div className="form-group">
+            <textarea
+              name="text"
+              id="text"
+              className="form-control mt-4 bg-body-secondary border-0 rounded-4 p-3"
+              placeholder="Text"
+              onChange={onFieldChange}
+              value={post.text}
+            />
+          </div>
+          <div className="w-100 d-flex">
+            <button
+              type="submit"
+              className="btn btn-primary mt-4 ms-auto px-5 rounded-3"
+            >
+              {postId ? 'Save' : 'Add'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
