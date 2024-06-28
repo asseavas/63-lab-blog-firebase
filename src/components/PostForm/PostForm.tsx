@@ -57,7 +57,7 @@ const PostForm = () => {
       hour12: false,
     };
 
-    return new Intl.DateTimeFormat('en-EN', options).format(date);
+    return new Intl.DateTimeFormat('ru-RU', options).format(date);
   };
 
   const onFormSubmit = async (event: React.FormEvent) => {
@@ -97,14 +97,14 @@ const PostForm = () => {
       <div className="rounded-4 bg-light-subtle p-4 px-5 w-50">
         <form onSubmit={onFormSubmit} className="w-100">
           <h4 className="my-4 text-center">
-            {postId ? 'Edit post' : 'Add new post'}
+            {postId ? 'Редактировать' : 'Создать новый пост'}
           </h4>
           <div className="form-group">
             <input
               type="text"
               name="title"
               id="title"
-              placeholder="Title"
+              placeholder="Заголовок"
               className="form-control bg-body-secondary border-0 rounded-4 p-3"
               onChange={onFieldChange}
               value={post.title}
@@ -115,7 +115,7 @@ const PostForm = () => {
               name="text"
               id="text"
               className="form-control mt-4 bg-body-secondary border-0 rounded-4 p-3"
-              placeholder="Text"
+              placeholder="Текст"
               onChange={onFieldChange}
               value={post.text}
             />
@@ -125,7 +125,7 @@ const PostForm = () => {
               type="submit"
               className="btn btn-primary mt-4 ms-auto px-5 rounded-3"
             >
-              {postId ? 'Save' : 'Add'}
+              {postId ? 'Сохрнаить' : 'Создать'}
             </button>
           </div>
         </form>

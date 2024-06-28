@@ -16,7 +16,7 @@ const PostCard: React.FC<Props> = ({ post }) => {
         </p>
         <p className="card-text">{post.text}</p>
         <Link to={post.id} className="btn btn-primary mt-2 px-4 rounded-3">
-          Read more
+          Узнать больше
         </Link>
       </div>
     </div>

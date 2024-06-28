@@ -57,7 +57,7 @@ const OnePost: React.FC = () => {
         className="d-flex justify-content-center align-items-center"
         style={{ height: '300px' }}
       >
-        <p>Post not found</p>
+        <p>Пост не найден</p>
       </div>
     );
   }
@@ -65,7 +65,7 @@ const OnePost: React.FC = () => {
   return (
     <div className="container pt-5 d-flex justify-content-center">
       <div className="w-50 card rounded-4 border-0 pt-5 pb-4 px-4">
-        <h3 className="text-center mb-4">Post</h3>
+        <h3 className="text-center mb-4">Пост</h3>
         <div className="card-body">
           <h5 className="card-title mb-3">{post.title}</h5>
           <p className="card-text mb-2">
@@ -77,13 +77,13 @@ const OnePost: React.FC = () => {
               to={'/posts/' + postId + '/edit'}
               className="btn btn-primary mt-2 px-4 rounded-3 ms-auto"
             >
-              Edit
+              Редактировать
             </Link>
             <button
               className="btn btn-danger mt-2 px-4 rounded-3"
               onClick={deletePost}
             >
-              Delete
+              Удалить
             </button>
           </div>
         </div>

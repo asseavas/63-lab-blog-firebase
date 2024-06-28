@@ -10,22 +10,22 @@ const Toolbar = () => {
         <ul className="navbar-nav d-flex flex-row gap-4">
           <li className="nav-item">
             <NavLink className="nav-link" to="/">
-              Home
+              Главная
             </NavLink>
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" to="/new-post">
-              Add
+              Создать
             </NavLink>
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" to="/about">
-              About
+              О нас
             </NavLink>
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" to="/contacts">
-              Contacts
+              Контакты
             </NavLink>
           </li>
         </ul>

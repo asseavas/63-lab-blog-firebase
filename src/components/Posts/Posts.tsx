@@ -9,7 +9,7 @@ interface Props {
 const Posts: React.FC<Props> = ({ posts }) => {
   return (
     <div className="d-flex flex-column align-items-center gap-3 pt-5">
-      <h3 className="text-center">All posts</h3>
+      <h3 className="text-center">Все посты</h3>
       {posts
         .slice()
         .reverse()

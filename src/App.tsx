@@ -13,7 +13,7 @@ const App = () => {
       <header>
         <Toolbar />
       </header>
-      <main>
+      <main className="container">
         <Routes>
           <Route path="/" element={<Home />}>
             <Route path=":postId" element={<OnePost />} />
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/contacts" element={<Contacts />} />
           <Route
             path="*"
-            element={<h1 className="text-center">Not found!</h1>}
+            element={<h1 className="text-center">Страница не найдена!</h1>}
           />
         </Routes>
       </main>
