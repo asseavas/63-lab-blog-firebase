@@ -106,6 +106,7 @@ const PostForm = () => {
               id="title"
               placeholder="Заголовок"
               className="form-control bg-body-secondary border-0 rounded-4 p-3"
+              required
               onChange={onFieldChange}
               value={post.title}
             />
@@ -116,6 +117,7 @@ const PostForm = () => {
               id="text"
               className="form-control mt-4 bg-body-secondary border-0 rounded-4 p-3"
               placeholder="Текст"
+              required
               onChange={onFieldChange}
               value={post.text}
             />
