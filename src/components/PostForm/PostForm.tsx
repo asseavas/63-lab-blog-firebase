@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { NewPost, Post } from '../../types';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ApiPost } from '../../types';
 import axiosApi from '../../axiosApi';
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 
 const PostForm = () => {
-  const [post, setPost] = useState<NewPost>({
+  const [post, setPost] = useState<ApiPost>({
     date: '',
     title: '',
     text: '',
@@ -17,24 +17,24 @@ const PostForm = () => {
   const params = useParams();
   const postId = params.postId;
 
-  useEffect(() => {
-    if (postId) {
-      const fetchPost = async () => {
-        setIsLoading(true);
+  const fetchPost = useCallback(async (postId: string) => {
+    setIsLoading(true);
+    const response = await axiosApi.get<ApiPost | null>(
+      '/posts/' + postId + '.json',
+    );
 
-        try {
-          const { data } = await axiosApi.get<Post>(
-            '/posts/' + postId + '.json',
-          );
-          setPost(data);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      void fetchPost();
+    if (response.data) {
+      setPost(response.data);
     }
-  }, [postId]);
+
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (postId !== undefined) {
+      void fetchPost(postId);
+    }
+  }, [postId, fetchPost]);
 
   const onFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

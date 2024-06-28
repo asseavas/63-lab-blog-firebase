@@ -12,24 +12,24 @@ const OnePost: React.FC = () => {
   const postId = params.postId;
   const navigate = useNavigate();
 
-  const fetchPost = useCallback(async () => {
-    if (postId) {
-      try {
-        const { data: postData } = await axiosApi.get<Post>(
-          '/posts/' + postId + '.json',
-        );
-        setPost(postData);
-      } catch (error) {
-        console.error('There was an error!', error);
-      } finally {
-        setIsLoading(false);
-      }
+  const fetchOnePost = useCallback(async (postId: string) => {
+    setIsLoading(true);
+    const response = await axiosApi.get<Post | null>(
+      '/posts/' + postId + '.json',
+    );
+
+    if (response.data) {
+      setPost(response.data);
     }
-  }, [postId]);
+
+    setIsLoading(false);
+  }, []);
 
   useEffect(() => {
-    void fetchPost();
-  }, [fetchPost]);
+    if (postId !== undefined) {
+      void fetchOnePost(postId);
+    }
+  }, [postId, fetchOnePost]);
 
   const deletePost = async () => {
     try {

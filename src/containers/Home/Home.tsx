@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Posts from '../../components/Posts/Posts';
-import { Post } from '../../types';
+import { ApiPosts, Post } from '../../types';
 import axiosApi from '../../axiosApi';
 import Spinner from '../../components/Spinner/Spinner';
 
@@ -12,25 +12,31 @@ const Home = () => {
   const location = useLocation();
   const isNestedRoute = location.pathname !== '/';
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axiosApi.get<{ [key: string]: Post }>(
-          '/posts.json',
-        );
-        const postsArray = Object.keys(response.data).map((key) => ({
-          ...response.data[key],
-          id: key,
-        }));
-        setPosts(postsArray);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchPosts = useCallback(async () => {
+    setIsLoading(true);
+    const response = await axiosApi.get<ApiPosts | null>('/posts.json');
 
-    void fetchPosts();
+    const postsResponse = response.data;
+
+    if (postsResponse !== null) {
+      const posts: Post[] = Object.keys(postsResponse).map((id: string) => {
+        return {
+          ...postsResponse[id],
+          id,
+        };
+      });
+
+      setPosts(posts);
+    } else {
+      setPosts([]);
+    }
+
+    setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    void fetchPosts();
+  }, [fetchPosts]);
 
   return (
     <>
