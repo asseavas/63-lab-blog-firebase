@@ -4,13 +4,14 @@ import axiosApi from '../../axiosApi';
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 
-const PostForm = () => {
-  const [post, setPost] = useState<ApiPost>({
-    date: '',
-    title: '',
-    text: '',
-  });
+const initialState = {
+  date: '',
+  title: '',
+  text: '',
+};
 
+const PostForm = () => {
+  const [post, setPost] = useState<ApiPost>(initialState);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ const PostForm = () => {
   useEffect(() => {
     if (postId !== undefined) {
       void fetchPost(postId);
+    } else {
+      setPost(initialState);
     }
   }, [postId, fetchPost]);
 
@@ -81,8 +84,49 @@ const PostForm = () => {
     }
   };
 
+  let form = (
+    <div className="rounded-4 bg-light-subtle p-4 px-5 w-50">
+      <form onSubmit={onFormSubmit} className="w-100">
+        <h4 className="my-4 text-center">
+          {postId ? 'Редактировать' : 'Создать новый пост'}
+        </h4>
+        <div className="form-group">
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Заголовок"
+            className="form-control bg-body-secondary border-0 rounded-4 p-3"
+            required
+            onChange={onFieldChange}
+            value={post.title}
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            name="text"
+            id="text"
+            className="form-control mt-4 bg-body-secondary border-0 rounded-4 p-3"
+            placeholder="Текст"
+            required
+            onChange={onFieldChange}
+            value={post.text}
+          />
+        </div>
+        <div className="w-100 d-flex">
+          <button
+            type="submit"
+            className="btn btn-primary mt-4 ms-auto px-5 rounded-3"
+          >
+            {postId ? 'Сохрнаить' : 'Создать'}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+
   if (isLoading) {
-    return (
+    form = (
       <div
         className="d-flex justify-content-center align-items-center"
         style={{ height: '300px' }}
@@ -93,46 +137,7 @@ const PostForm = () => {
   }
 
   return (
-    <div className="container pt-5 d-flex justify-content-center">
-      <div className="rounded-4 bg-light-subtle p-4 px-5 w-50">
-        <form onSubmit={onFormSubmit} className="w-100">
-          <h4 className="my-4 text-center">
-            {postId ? 'Редактировать' : 'Создать новый пост'}
-          </h4>
-          <div className="form-group">
-            <input
-              type="text"
-              name="title"
-              id="title"
-              placeholder="Заголовок"
-              className="form-control bg-body-secondary border-0 rounded-4 p-3"
-              required
-              onChange={onFieldChange}
-              value={post.title}
-            />
-          </div>
-          <div className="form-group">
-            <textarea
-              name="text"
-              id="text"
-              className="form-control mt-4 bg-body-secondary border-0 rounded-4 p-3"
-              placeholder="Текст"
-              required
-              onChange={onFieldChange}
-              value={post.text}
-            />
-          </div>
-          <div className="w-100 d-flex">
-            <button
-              type="submit"
-              className="btn btn-primary mt-4 ms-auto px-5 rounded-3"
-            >
-              {postId ? 'Сохрнаить' : 'Создать'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <div className="container pt-5 d-flex justify-content-center">{form}</div>
   );
 };
 
