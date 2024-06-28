@@ -9,7 +9,7 @@ const About = () => {
   };
 
   return (
-    <div className="pt-5 d-flex justify-content-center">
+    <div className="pt-5 d-flex justify-content-center mb-5">
       <div className="card rounded-4 border-0 pt-5 pb-5 px-5">
         <h3 className="text-center mb-5">About My Blog</h3>
         <h6 className="w-75 pt-2 mb-5 d-flex align-self-center text-center">

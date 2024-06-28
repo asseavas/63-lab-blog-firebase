@@ -1,0 +1,27 @@
+.social-link {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  color: transparent;
+  overflow: hidden;
+}
+
+.social-1 {
+  background: url(../../assets/instagram.svg) center no-repeat;
+  background-size: 60px;
+}
+
+.social-2 {
+  background: url(../../assets/telegram.svg) center no-repeat;
+  background-size: 60px;
+}
+
+.social-3 {
+  background: url(../../assets/facebook.svg) center no-repeat;
+  background-size: 60px;
+}
+
+.social-4 {
+  background: url(../../assets/post.svg) center no-repeat;
+  background-size: 60px;
+}
